@@ -6,8 +6,11 @@ import { Interests } from '../api/interests.js';
 import './interest.js';
 import './body.html';
 
+
+
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
+  Meteor.subscribe('interests');
 });
 
   Template.body.helpers({
@@ -35,13 +38,10 @@ Template.body.events({
     const target = event.target;
     const text = target.text.value;
 
-    // Insert a task into the collection
-    Interests.insert({
-      text,
-      createdAt: new Date(), // current time
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
-    });
+
+    // Insert a interest into the collection
+    Meteor.call('interests.insert', text);
+
 
     // Clear form
     target.text.value = '';

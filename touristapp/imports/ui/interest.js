@@ -1,17 +1,26 @@
+import { Meteor } from 'meteor/meteor';
+
 import { Template } from 'meteor/templating';
 
-import { Interests } from '../api/interests.js';
-
 import './interest.html';
+
+Template.interest.helpers({
+  isOwner() {
+    return this.owner === Meteor.userId();
+  },
+});
 
 Template.interest.events({
   'click .toggle-checked'() {
     // Set the checked property to the opposite of its current value
-    Interests.update(this._id, {
-      $set: { checked: ! this.checked },
-    });
+    Meteor.call('interests.setChecked', this._id, !this.checked);
+
   },
   'click .delete'() {
-    Interests.remove(this._id);
+    Meteor.call('interests.remove', this._id);
   },
+
+  'click .toggle-private'() {
+   Meteor.call('interests.setPrivate', this._id, !this.private);
+ },
 });
