@@ -1,0 +1,28 @@
+<body>
+  <div class="container">
+    <header>
+      <h1>Interests ({{incompleteCount}})</h1>
+      <label class="hide-completed">
+        <input type="checkbox" />
+        Hide Selected Interests
+      </label>
+
+      {{> loginButtons}}
+      {{#if currentUser}}
+        <form class="new-interest">
+          <input type="text" name="text" placeholder="Type to add new interest" />
+        </form>
+      {{/if}}
+  </header>
+
+    <ul>
+      {{#each interests}}
+        {{> interest}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+<template name="interest">
+  <li>{{text}}</li>
+</template>
